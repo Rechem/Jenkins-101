@@ -16,9 +16,11 @@ pipeline {
               }
           }
       }
-      steps {
-          timeout(time: 1, unit: 'HOURS') {
-              waitForQualityGate abortPipeline: true
+      stage('code quality') {
+          steps {
+              timeout(time: 1, unit: 'HOURS') {
+                  waitForQualityGate abortPipeline: true
+              }
           }
       }
       stage('build'){
