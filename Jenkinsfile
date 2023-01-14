@@ -12,8 +12,8 @@ pipeline {
       }
       stage('code analysis'){
           steps{
-              withSonarQubeEnv('SonarQube') {
-                  bat 'sonar-scanner'
+              withSonarQubeEnv(installationName : 'SonarQube') {
+                  sh 'mvn clean package sonar:sonar'
               }
           }
       }
