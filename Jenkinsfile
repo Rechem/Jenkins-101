@@ -1,7 +1,7 @@
 pipeline {
   agent any
   stages {
-      stage ('test'){
+      stage ('Test'){
         steps {
             bat 'gradle test'
             archiveArtifacts 'build/test-results/test/*.xml'
@@ -10,21 +10,21 @@ pipeline {
                      fileIncludePattern: '**/*.json'
         }
       }
-      stage('code analysis'){
+      stage('Code Analysis'){
           steps{
               withSonarQubeEnv(installationName : 'SonarQube') {
                   bat 'gradle sonarqube'
               }
           }
       }
-      stage('code quality') {
+      stage('Code Quality') {
           steps {
               timeout(time: 1, unit: 'HOURS') {
                   waitForQualityGate abortPipeline: true
               }
           }
       }
-      stage('build'){
+      stage('Build'){
           steps{
               bat 'gradle build'
               bat 'gradle javadoc'
@@ -32,14 +32,14 @@ pipeline {
               archiveArtifacts 'build/libs/**/*.*'
           }
       }
-      stage('deploy'){
+      stage('Deploy'){
           steps{
               bat "gradle publish"
           }
       }
-      stage('notification'){
+      stage('Notification'){
           steps{
-              echo "notification"
+              notifyEvents message: 'This is a Jenkins automated message to let you know that a new version has been published !', title: 'New version released !', token: 'p-_GFdK1uAFCdwULUeSEHpn8iv4O9HSw'
           }
       }
   }
