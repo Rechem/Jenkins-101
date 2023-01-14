@@ -10,16 +10,24 @@ pipeline {
         }
       }
       stage('code analysis'){
-        echo "code analysis"
+          steps{
+              bat echo "code analysis"
+          }
       }
       stage('code quality'){
-        "code quality"
+          steps{
+              bat echo "code quality"
+          }
       }
       stage('build'){
-        echo "build"
+          steps{
+              bat echo "build"
+          }
       }
       stage('notification'){
-        echo "notification"
+          steps{
+              bat echo "notification"
+          }
       }
   }
 }
