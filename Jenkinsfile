@@ -11,22 +11,22 @@ pipeline {
       }
       stage('code analysis'){
           steps{
-              bat echo "code analysis"
+              echo "code analysis"
           }
       }
       stage('code quality'){
           steps{
-              bat echo "code quality"
+              echo "code quality"
           }
       }
       stage('build'){
           steps{
-              bat echo "build"
+              echo "build"
           }
       }
       stage('notification'){
           steps{
-              bat echo "notification"
+              echo "notification"
           }
       }
   }
