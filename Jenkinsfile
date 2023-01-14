@@ -13,7 +13,7 @@ pipeline {
       stage('code analysis'){
           steps{
               withSonarQubeEnv(installationName : 'SonarQube') {
-                  bat 'mvn clean package sonar:sonar'
+                  bat 'gradle sonarqube'
               }
           }
       }
