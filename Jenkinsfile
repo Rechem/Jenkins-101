@@ -28,8 +28,13 @@ pipeline {
           steps{
               bat 'gradle build'
               bat 'gradle javadoc'
-              archiveArtifacts 'build/docs'
-              archiveArtifacts 'build/libs'
+              archiveArtifacts 'build/docs/**/*.*'
+              archiveArtifacts 'build/libs/**/*.*'
+          }
+      }
+      stage('deploy'){
+          steps{
+              bat "gradle publish"
           }
       }
       stage('notification'){
