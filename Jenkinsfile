@@ -5,28 +5,33 @@ pipeline {
         steps {
             bat 'gradle test'
             archiveArtifacts 'build/test-results/test/*.xml'
-            cucumber reportTitle: 'My report',
+            cucumber buildStatus: 'FAILURE',
+                     reportTitle: 'My report',
                      fileIncludePattern: '**/*.json'
         }
       }
       stage('code analysis'){
           steps{
-              echo "code analysis"
+              withSonarQubeEnv('SonarQube') {
+              }
           }
       }
-      stage('code quality'){
-          steps{
-              echo "code quality"
+      steps {
+          timeout(time: 1, unit: 'HOURS') {
+              waitForQualityGate abortPipeline: true
           }
       }
       stage('build'){
           steps{
-              echo "build"
+              bat 'gradle build'
+              bat 'gradle javadoc'
+              archiveArtifacts 'build/docs'
+              archiveArtifacts 'build/libs'
           }
       }
       stage('notification'){
           steps{
-              echo "notification"
+              bat echo "notification"
           }
       }
   }
