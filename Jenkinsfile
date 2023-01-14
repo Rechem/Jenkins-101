@@ -5,8 +5,7 @@ pipeline {
         steps {
             bat 'gradle test'
             archiveArtifacts 'build/test-results/test/*.xml'
-            cucumber buildStatus: 'FAILURE',
-                     reportTitle: 'My report',
+            cucumber reportTitle: 'My report',
                      fileIncludePattern: '**/*.json'
         }
       }
