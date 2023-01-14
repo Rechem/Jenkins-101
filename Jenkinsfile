@@ -31,7 +31,7 @@ pipeline {
       }
       stage('notification'){
           steps{
-              bat echo "notification"
+              echo "notification"
           }
       }
   }
