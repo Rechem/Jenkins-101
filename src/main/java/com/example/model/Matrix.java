@@ -1,5 +1,8 @@
 package com.example.model;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 public class Matrix {
 
 	private int nrows;
@@ -98,6 +101,11 @@ public class Matrix {
 
 	return  true;
 
+	}
+
+	@Override
+	public int hashCode() {
+		return super.hashCode();
 	}
 
 }
