@@ -1,41 +1,41 @@
 pipeline {
-  agent any
-  stages {
-      stage ('Test'){
-        steps {
-            bat 'gradle test';
-            junit 'build/test-results/test/*.xml'
-            cucumber 'target/report.json'
+    agent any
+    stages {
+        stage('Test') {
+            steps {
+                bat 'gradle test';
+                junit 'build/test-results/test/*.xml'
+                cucumber 'target/report.json'
+            }
         }
-      }
-      stage('Code Analysis'){
-          steps{
-              withSonarQubeEnv(installationName : 'SonarQube') {
-                  bat 'gradle sonarqube';
-              }
-          }
-      }
-      stage('Code Quality') {
-          steps {
-              timeout(time: 1, unit: 'HOURS') {
-                  waitForQualityGate abortPipeline: true
-              }
-          }
-      }
-      stage('Build'){
-          steps{
-              bat 'gradle build';
-              bat 'gradle javadoc';
-              archiveArtifacts 'build/docs/**/*.*';
-              archiveArtifacts 'build/libs/**/*.*';
-          }
-      }
-      stage('Deploy'){
-          steps{
-              bat "gradle publish";
-          }
-      }
-  }
+        stage('Code Analysis') {
+            steps {
+                withSonarQubeEnv(installationName: 'SonarQube') {
+                    bat 'gradle sonarqube';
+                }
+            }
+        }
+        stage('Code Quality') {
+            steps {
+                timeout(time: 1, unit: 'HOURS') {
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
+        stage('Build') {
+            steps {
+                bat 'gradle build';
+                bat 'gradle javadoc';
+                archiveArtifacts 'build/docs/**/*.*';
+                archiveArtifacts 'build/libs/**/*.*';
+            }
+        }
+        stage('Deploy') {
+            steps {
+                bat "gradle publish";
+            }
+        }
+    }
     post {
         success {
             mail to: 'ir_chadouli@esi.dz',
